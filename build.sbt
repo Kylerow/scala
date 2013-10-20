@@ -3,6 +3,21 @@ import scalabuild._, BuildLogic._
 // Populate the repo with bootstrap jars
 initialize := s"${baseDirectory.value}/pull-binary-libs.sh".!
 
+resolvers += Resolver.sonatypeRepo("snapshots")
+
+libraryDependencies += "org.scala-miniboxing.plugins" %% "miniboxing-runtime" % "0.1-SNAPSHOT"
+
+addCompilerPlugin("org.scala-miniboxing.plugins" %% "miniboxing-plugin" % "0.1-SNAPSHOT")
+
+retrieveManaged := true
+
+scalacOptions ++= (
+  "-P:minibox:log" ::    // enable the miniboxing plugin output (which explains what the plugin is doing)
+  "-P:minibox:hijack" :: // enable hijacking the @specialized annotations transforming them into @miniboxed annotations
+  "-optimize" ::         // necessary to get the best performance when using the miniboxing plugin
+  Nil
+)
+
 // Don't know how to get a root project which aggregates all projects except
 // by not defining any root project. Then how do I refer to the not-defined project?
 lazy val scala = project.asRoot aggregate (allRefs: _*)

@@ -3,11 +3,11 @@
 
 CP="$(cpof ./lib_managed/jars/org.scala-miniboxing.plugins):$(cpof build/quick/classes):$(cpof build/deps)"
 PROGRAM="scala.tools.nsc.Main"
-MINIBOX="./lib_managed/jars/org.scala-miniboxing.plugins/miniboxing-plugin_2.11.0-SNAPSHOT/miniboxing-plugin_2.11.0-SNAPSHOT-0.1-SNAPSHOT.jar"
+MINIBOX=$(ls ./lib_managed/jars/org.scala-miniboxing.plugins/miniboxing-plugin_*/*.jar)
 
 java -classpath "$CP" \
   "$PROGRAM" \
   -usejavacp \
-  -P:minibox:hijack -P:minibox:log -Xplugin:$MINIBOX \
+  -P:minibox:hijack -P:minibox:log -P:minibox:stats -Xplugin:$MINIBOX \
   -optimize \
   "$@"

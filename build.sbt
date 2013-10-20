@@ -5,6 +5,8 @@ initialize := s"${baseDirectory.value}/pull-binary-libs.sh".!
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
+scalaBinaryVersion := "2.11.0-M4"
+
 libraryDependencies += "org.scala-miniboxing.plugins" %% "miniboxing-runtime" % "0.1-SNAPSHOT"
 
 addCompilerPlugin("org.scala-miniboxing.plugins" %% "miniboxing-plugin" % "0.1-SNAPSHOT")
